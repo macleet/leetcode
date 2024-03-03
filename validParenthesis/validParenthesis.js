@@ -24,6 +24,13 @@
 
 'use strict';
 
-export default isValid(s) {
+function isValid(s) {
+    
+    for (const i in s)
+        console.log(s[i])
+    // s.forEach(c => console.log(c));
 
+    return false;
 }
+
+isValid('(){}{}()')
