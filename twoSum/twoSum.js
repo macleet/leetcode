@@ -25,17 +25,12 @@
  
 // Follow-up: Can you come up with an algorithm that is less than O(n^2) time complexity?
 
-function twoSum(nums, target) {
-    let addends = [];
-    for (let i = 0, j = i + 1; i < nums.length; i++) {
-        let found = false;
+export default function twoSum(nums, target) {
+    for (let i = 0; i < nums.length; i++) {
         const diff = target - nums[i];
-
-        while (j < nums.length && !found) {
-            found = nums[j] == diff; 
-            if (!found) j++;
+        for (let j = i + 1; j < nums.length; j++) {
+            if (nums[j] == diff) return [i,j]
         }
-        if (found) addends.push (i, j);
     }
-    return addends;
+    return [i,j];
 }
