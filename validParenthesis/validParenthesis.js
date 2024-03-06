@@ -24,13 +24,33 @@
 
 'use strict';
 
-function isValid(s) {
-    
-    for (const i in s)
-        console.log(s[i])
-    // s.forEach(c => console.log(c));
-
+function corresponds(prevPar, currPar) {
+    switch (prevPar) {
+        case '(':
+            if (currPar == ')') return true;
+            break;
+        case '[':
+            if (currPar == ']') return true;
+            break;
+        case '{':
+            if (currPar == '}') return true;
+            break;
+    }
     return false;
 }
 
-isValid('(){}{}()')
+function isValid(s) {
+    const stack = [];
+    for (let i = 0; i < s.length; i++) {
+        if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
+            stack.push(s[i]);
+        } else {
+            if (stack.length == 0) return false;
+            if (corresponds(stack[stack.length-1], s[i])) stack.pop();
+            else return false;
+        }
+    }
+    return stack.length == 0 ? true : false;
+}
+
+export default isValid;
