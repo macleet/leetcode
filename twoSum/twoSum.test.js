@@ -1,4 +1,4 @@
-// Two Sum Problem Test
+// Two Sum Problem Test File
 
 'use strict';
 
@@ -12,10 +12,7 @@ function assertTwoSum(actual, expected, message) {
         console.error('Actual: ', actual, '\n');
         return false;
     }
-
     console.error(message, 'PASS');
-    // console.error('Expected: ',  expected);
-    // console.error('Actual: ', actual, '\n');
     return true;
 }
 
@@ -45,17 +42,15 @@ function testTwoSum(n=0) {
     // Randomly-generated tests
     // In constraints, the length of nums can get fairly large (2 <= nums.length <= 100_000)
     // With thousands of tests, can be CPU heavy
-    // if (isMainThread) {
-        const workers = [];
-        for (let i = 0; i < n; i++) {
-            workers.push(new Worker('./worker.js'));
-            workers[i].postMessage(null);
-            workers[i].on('message', message => {
-                assertTwoSum(...message, `Test ${i+1}: `);
-                workers[i].terminate();
-            });
-        }
-    // } 
+    const workers = [];
+    for (let i = 0; i < n; i++) {
+        workers.push(new Worker('./worker.js'));
+        workers[i].postMessage(null);
+        workers[i].on('message', message => {
+            assertTwoSum(...message, `Test ${i+1}: `);
+            workers[i].terminate();
+        });
+    }
 }
 
 switch (process.argv.length) {
@@ -67,6 +62,5 @@ switch (process.argv.length) {
         // For randomly-generated tests
         testTwoSum( Number(process.argv[2]) );
         break;
-    default:
-        console.error("Usage: node twoSum.test.js [NUM_TESTS]");
+    default: console.error("Usage: node twoSum.test.js [NUM_TESTS]");
 }
