@@ -124,7 +124,8 @@ export class List {
             current = current.next;
         }
         this.swap(pivot, index);
-        right = index;      // Reassign right pointer to index after swap
+        if (left === index && right === pivot) left = pivot;    // Reassign left pointer to pivot if swapped
+        right = index;                                          // Reassign right pointer to index after swap
         return [left, pivot, right];
     }
 
