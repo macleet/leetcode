@@ -9,9 +9,10 @@ export class ListNode {
 }
 
 export class List {
-    constructor() {
+    constructor(list = null) {
         this.head = null;
         this.tail = null;
+        list && list.forEach(val => this.append(val));
     }
 
     *[Symbol.iterator]() {
