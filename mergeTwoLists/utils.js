@@ -1,5 +1,3 @@
-'use strict';
-
 import { List } from "./List.js";
 
 export function randList(n, sort = false) {
