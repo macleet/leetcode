@@ -1,5 +1,3 @@
-'use strict';
-
 export class ListNode {
     constructor(val = null) {
         this.val = val;
@@ -12,7 +10,15 @@ export class List {
     constructor(list = null) {
         this.head = null;
         this.tail = null;
-        list && list.forEach(val => this.append(val));
+        let curr = list && list.head;
+        while (curr) {
+            this.append(curr.val);
+            curr = curr.next;
+        }
+    }
+
+    static copy(list) {
+        return new List(list);
     }
 
     *[Symbol.iterator]() {
