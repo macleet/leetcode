@@ -104,7 +104,7 @@ export class List {
     }
 
     // Swaps are done in-place, no extra memory used
-    partition(left, right) {
+    #partition(left, right) {
         // Find "middle" pivot with fast & slow pointers
         let pivot = left;
         let fast = left;
@@ -147,16 +147,16 @@ export class List {
         return [left, pivot, right];
     }
 
-    quicksort(left, right) {
+    #quicksort(left, right) {
         if (left == right || left.prev == right) return;               // Base case
-        const [l, pivot, r] = this.partition(left, right);             // Select pivot + new left and right pointers reflecting swaps
-        if (l !== r && pivot.prev)  this.quicksort(l, pivot.prev);     // Sort left partition
-        if (l !== r && pivot.next)  this.quicksort(pivot.next, r);     // Sort right partition
+        const [l, pivot, r] = this.#partition(left, right);             // Select pivot + new left and right pointers reflecting swaps
+        if (l !== r && pivot.prev)  this.#quicksort(l, pivot.prev);     // Sort left partition
+        if (l !== r && pivot.next)  this.#quicksort(pivot.next, r);     // Sort right partition
     }
 
     sort() {
         if (!this.head || !this.tail || this.head == this.tail) return;
-        this.quicksort(this.head, this.tail);  // Start quick sort algorithm
+        this.#quicksort(this.head, this.tail);  // Start quick sort algorithm
     }
 
     print(reverse = false) {
