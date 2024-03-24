@@ -36,6 +36,18 @@ export class List {
         }
     }
 
+    isEqual(head) {
+        let curr1 = this.head;
+        let curr2 = head;
+        while (curr1 && curr2) {
+            if (curr1.val !== curr2.val)  return false;
+            curr1 = curr1.next;
+            curr2 = curr2.next;
+        }
+        if (curr1 || curr2)  return false;
+        return true; 
+    }
+
     append(...vals) {
         vals.forEach(val => {
             const newNode = new ListNode(val);
