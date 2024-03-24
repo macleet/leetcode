@@ -60,14 +60,14 @@ function mergeTwoLists(list1, list2) {
             curr1 = curr1.next;
         }
     }
-    let curr = curr1 ?? curr2;
 
+    let curr = curr1 || curr2;
     const remList = [];
     while(curr) {
-        remList.push(curr.val)
+        remList.push(curr.val);
         curr = curr.next;
     }
-    newList.append(...remList.sort());
+    newList.append(...remList.sort((a, b) => a - b));
     
     testing && process.stdout.write('Merged list:        ') + newList.print();
     
