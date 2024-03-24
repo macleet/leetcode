@@ -169,4 +169,14 @@ export class List {
         }
         console.log(']');
     }
+
+    static print(head, tail = null, reverse = false) {
+        let currNode = reverse ? tail : head;
+        while (currNode !== tail) {
+            process.stdout.write(currNode.val.toString());
+            currNode = reverse ? currNode.prev : currNode.next;
+            if(currNode) process.stdout.write(', ');
+        }
+        !tail && console.log();
+    }
 }
