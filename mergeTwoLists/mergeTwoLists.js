@@ -21,8 +21,6 @@
 //  -100 <= Node.val <= 100
 //  Both list1 and list2 are sorted in non-decreasing order.
 
-'use strict';
-
 import { ListNode, List } from "./List.js";
 
 /**
@@ -30,15 +28,35 @@ import { ListNode, List } from "./List.js";
  * @param {ListNode} list2
  */
 function mergeTwoLists(list1, list2) {
+    const testing = arguments[2];  // bool on test mode on/off (undefined if no arg given)
+    testing && console.log('\nTesting merge two sorted lists:\n');
+
     let [curr1, curr2] = [list1, list2];
     const newList = new List();
     while(curr1 && curr2) {
-        // console.log(curr1.val, curr2.val)
+        
+        if (testing) {  // Purely for tests
+            process.stdout.write('\nSorted list 1:      ');
+            List.print(list1, curr1);
+            process.stdout.write('\u001b[' + 35 + 'm' + curr1.val + '\u001b[0m ');
+            List.print(curr1.next);
+            
+            process.stdout.write('Sorted list 2:      ');
+            List.print(list2, curr2);
+            process.stdout.write('\u001b[' + 33 + 'm' + curr2.val + '\u001b[0m ');
+            List.print(curr2.next);
+        }
+
+        // Merge logic
         if (curr1.val >= curr2.val) {
+            testing && console.log('\nValue2 <= Value1:   Add', '\u001b[' + 33 + 'm' + curr2.val + '\u001b[0m');
             newList.append(curr2.val);
+            testing && process.stdout.write('Merged list:        ') + newList.print();
             curr2 = curr2.next;     
         } else {    
+            testing && console.log('\nValue1 < Value2:    Add', '\u001b[' + 35 + 'm' + curr1.val + '\u001b[0m');
             newList.append(curr1.val);
+            testing && process.stdout.write('Merged list:        ') + newList.print();
             curr1 = curr1.next;
         }
     }
@@ -49,7 +67,10 @@ function mergeTwoLists(list1, list2) {
         remList.push(curr.val)
         curr = curr.next;
     }
-    newList.append(...remList.sort())
+    newList.append(...remList.sort());
+    
+    testing && process.stdout.write('Merged list:        ') + newList.print();
+    
     return newList;
 }
 
