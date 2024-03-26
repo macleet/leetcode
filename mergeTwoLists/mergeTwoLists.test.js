@@ -12,12 +12,12 @@ const MAX_NODES = 50;
 
 function assertMergeLists(actual, expected) {
     process.stdout.write('\tExpected merged list:  ');
-    expected.print();
+    List.print(expected);
     process.stdout.write('\tActual merged list:    ');
-    actual.print();
+    List.print(actual);
 
     process.stdout.write('\tTest result:           ');
-    if (actual.isEqual(expected.head))  {
+    if (List.isEqual(actual, expected))  {
         console.log('\u001b[' + 32 + 'm' + 'PASS' + '\u001b[0m');
         return false;
     }
@@ -27,10 +27,17 @@ function assertMergeLists(actual, expected) {
 
 function testMergeLists(n) {
     for (let i = 0; i < n; i++) {
-        const list1 = randList(10, true);
-        const l1Copy = List.copy(list1);
-        const list2 = randList(10, true);
-        const l2Copy = List.copy(list2);
+        const rand1 = Math.round(Math.random() * MAX_NODES);
+        const rand2 = Math.round(Math.random() * MAX_NODES);
+
+        const list1 = randList(rand1, true);
+        const list2 = randList(rand2, true);
+
+        const l1Copy = List.copy(list1.head);
+        const l2Copy = List.copy(list2.head);
+        const expected = List.copy(l1Copy.concat(l2Copy.head, l2Copy.tail));
+        expected.sort();
+        const actual = mergeTwoLists(list1.head, list2.head); 
 
         console.log(`Test ${i+1}:`);
         process.stdout.write('\tSorted list 1:         ');
@@ -38,16 +45,9 @@ function testMergeLists(n) {
         process.stdout.write('\tSorted list 2:         ');
         list2.print();
     
-        const actual = mergeTwoLists(list1.head, list2.head);
-        const expected = list1.concat(list2);
-        expected.sort();
-    
-        if (assertMergeLists(actual, expected))  {
-            mergeTwoLists(l1Copy.head, l2Copy.head, true);
-            break;
-        }
+        if (assertMergeLists(actual, expected.head)) break;
     }
 }
 
-const testCount = 1000;
+const testCount = 5000;
 testMergeLists(testCount);
