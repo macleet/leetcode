@@ -8,7 +8,7 @@ import mergeTwoLists from "./mergeTwoLists.js";
 import { List } from "./List.js";
 import { randList } from './utils.js';
 
-const MAX_NODES = 50, MIN_NODES = 0;
+const MAX_NODES = 50;
 
 function assertMergeLists(actual, expected) {
     process.stdout.write('\tExpected merged list:  ');
