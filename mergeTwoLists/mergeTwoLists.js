@@ -28,50 +28,27 @@ import { ListNode, List } from "./List.js";
  * @param {ListNode} list2
  */
 function mergeTwoLists(list1, list2) {
-    const testing = arguments[2];  // bool on test mode on/off (undefined if no arg given)
-    testing && console.log('\nTesting merge two sorted lists:\n');
+    // Base cases
+    if (!list1 && !list2)   return null;
+    else if (!list1)        return list2;
+    else if (!list2)        return list1;
 
-    let [curr1, curr2] = [list1, list2];
-    const newList = new List();
-    while(curr1 && curr2) {
-        
-        if (testing) {  // Purely for tests
-            process.stdout.write('\nSorted list 1:      ');
-            List.print(list1, curr1);
-            process.stdout.write('\u001b[' + 35 + 'm' + curr1.val + '\u001b[0m ');
-            List.print(curr1.next);
-            
-            process.stdout.write('Sorted list 2:      ');
-            List.print(list2, curr2);
-            process.stdout.write('\u001b[' + 33 + 'm' + curr2.val + '\u001b[0m ');
-            List.print(curr2.next);
-        }
-
+    let mergedHead = null, mergedTail = null;
+    while(list1 && list2) {
         // Merge logic
-        if (curr1.val >= curr2.val) {
-            testing && console.log('\nValue2 <= Value1:   Add', '\u001b[' + 33 + 'm' + curr2.val + '\u001b[0m');
-            newList.append(curr2.val);
-            testing && process.stdout.write('Merged list:        ') + newList.print();
-            curr2 = curr2.next;     
-        } else {    
-            testing && console.log('\nValue1 < Value2:    Add', '\u001b[' + 35 + 'm' + curr1.val + '\u001b[0m');
-            newList.append(curr1.val);
-            testing && process.stdout.write('Merged list:        ') + newList.print();
-            curr1 = curr1.next;
+        const curr = list1.val < list2.val ? list1 : list2;
+        if (!mergedHead && !mergedTail) {   // If merged list is empty
+            mergedHead = curr;
+            mergedTail = curr;
+            (curr == list1) ? list1 = curr.next : list2 = curr.next; 
+            continue;
         }
+        mergedTail.next = curr;
+        mergedTail = curr;
+        (curr == list1) ? list1 = curr.next : list2 = curr.next; 
     }
-
-    let curr = curr1 || curr2;
-    const remList = [];
-    while(curr) {
-        remList.push(curr.val);
-        curr = curr.next;
-    }
-    newList.append(...remList.sort((a, b) => a - b));
-    
-    testing && process.stdout.write('Merged list:        ') + newList.print();
-    
-    return newList;
+    mergedTail.next = list1 || list2;
+    return mergedHead;  
 }
 
 export default mergeTwoLists;
