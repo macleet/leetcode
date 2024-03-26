@@ -7,18 +7,18 @@ export class ListNode {
 }
 
 export class List {
-    constructor(list = null) {
+    constructor(head = null) {
         this.head = null;
         this.tail = null;
-        let curr = list && list.head;
+        let curr = head;
         while (curr) {
             this.append(curr.val);
             curr = curr.next;
         }
     }
 
-    static copy(list) {
-        return new List(list);
+    static copy(head) {
+        return new List(head);
     }
 
     *[Symbol.iterator]() {
@@ -62,11 +62,13 @@ export class List {
         });
     }
 
-    concat(list) {
-        this.tail.next = list.head;
+    concat(head, tail) {
+        if (!this.head || !this.tail) return head;
+        else if(!head) return this.head;
+        this.tail.next = head;
         this.tail.next.prev = this.tail;
-        this.tail = list.tail;
-        return this;
+        this.tail = tail;
+        return this.head;
     }
 
     // Moves node to poistion after prevNode
